@@ -78,23 +78,28 @@ class Products with ChangeNotifier {
         'flutter-update-b10f3-default-rtdb.firebaseio.com', '/products.json');
     try {
       final response = await http.get(url);
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      // print(response.body);
+      final extractedData = await json.decode(response.body);
+
       if (extractedData == null) {
         return;
       }
       final List<Product> loadedProducts = []; //creating an empty list
       extractedData.forEach((prodId, prodData) {
+        print(prodId);
+        print(prodData);
         loadedProducts.add(
           Product(
             id: prodId,
             title: prodData['title'],
             description: prodData['description'],
-            price: prodData['price'],
+            price: (prodData['price']).toDouble(),
             isFavorite: prodData['isFavorite'],
             imageUrl: prodData['imageUrl'],
           ),
         );
       });
+      // print("heelo");
       _items = loadedProducts;
       notifyListeners();
       // print(json.decode(response.body));

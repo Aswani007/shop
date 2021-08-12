@@ -166,9 +166,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                       initialValue: _initValues['title'],
                       cursorColor: Colors.teal,
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: InputDecoration(labelText: 'Title',labelStyle:TextStyle(color: Colors.black)),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -192,8 +193,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                     ),
                     TextFormField(
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                       initialValue: _initValues['price'],
-                      decoration: InputDecoration(labelText: 'Price'),
+                      decoration: InputDecoration(labelText: 'Price',labelStyle:TextStyle(color: Colors.black)),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (_) {
@@ -226,8 +228,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       focusNode: _priceFocusNode,
                     ),
                     TextFormField(
+                      style: TextStyle(fontSize: 18, color: Colors.black,),
                       initialValue: _initValues['description'],
-                      decoration: InputDecoration(labelText: 'Description'),
+                      decoration: InputDecoration(labelText: 'Description',labelStyle:TextStyle(color: Colors.black)),
                       maxLines: 3,
                       //textInputAction: TextInputAction.next,
                       keyboardType: TextInputType
@@ -276,7 +279,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             ),
                           ),
                           child: _imageUrlController.text.isEmpty
-                              ? Text('Enter a URL')
+                              ? Text('Enter a URL',style:
+                            TextStyle(color: Colors.black),)
                               : FittedBox(
                                   child: Image.network(
                                     _imageUrlController.text,
@@ -287,7 +291,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         Expanded(
                           child: TextFormField(
                             // initialValue: _initValues['imageUrl'],
-                            decoration: InputDecoration(labelText: 'Image URL'),
+                            style: TextStyle(fontSize: 18, color: Colors.black),
+                            decoration: InputDecoration(labelText: 'Image URL',labelStyle:TextStyle(color: Colors.black)),
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
                             controller: _imageUrlController,

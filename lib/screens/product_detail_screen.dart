@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/providers/cart.dart';
 import 'package:shopping_app/providers/products.dart';
 import '../providers/products.dart';
 import 'package:provider/provider.dart';
-
+import '../providers/product.dart';
+import '../screens/cart_screen.dart';
 class ProductDetailScreen extends StatelessWidget {
   // final String title;
   //
@@ -17,6 +19,9 @@ class ProductDetailScreen extends StatelessWidget {
     final loadedProduct =
         Provider.of<Products>(context, listen: false).findById(productId);
 
+
+    final cart = Provider.of<Cart>(context,
+        listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedProduct.title),
@@ -36,12 +41,17 @@ class ProductDetailScreen extends StatelessWidget {
             SizedBox(
               height: 10.0,
             ),
+
             Text(
-              '\₹${loadedProduct.price}',
-              style: TextStyle(fontSize: 20.0, color: Colors.black38,fontWeight: FontWeight.bold),
+                "Description",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                  fontSize: 20.0,
+              ),
             ),
             SizedBox(
-              height: 10.0,
+              height: 7.0,
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10.0,),
@@ -50,8 +60,83 @@ class ProductDetailScreen extends StatelessWidget {
                 loadedProduct.description,
                 textAlign: TextAlign.center,
                 softWrap: true,
-                style:TextStyle(color: Colors.black,fontSize: 18),
+                style:TextStyle(color: Colors.black38,fontSize: 18,),
               ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Price :",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 17.0,
+                  ),
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+
+                Text(
+                  "\₹${loadedProduct.price}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red[300],
+                    fontSize: 28.0,
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(
+              height: 20.0,
+            ),
+            MaterialButton(
+              minWidth: 250,
+              height: 60,
+              color:Color(0xFF5E544B),
+              onPressed: () {
+                cart.additem(loadedProduct.id, loadedProduct.price, loadedProduct.title);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: Color(0xE0413F42),
+                    content: Text(
+                      'added to the cart',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+                    duration: Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removeSingleItem(loadedProduct.id);
+                      },
+                    ),
+                  ),
+                );
+
+              },
+
+
+
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+
+              ),
+              child: Text(
+                "Add To Cart", style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                color: Colors.white,
+
+              ),
+              ),
+
             ),
           ],
         ),
